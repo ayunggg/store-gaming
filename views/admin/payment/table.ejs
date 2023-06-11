@@ -1,0 +1,67 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Tipe Pembayaran</th>
+      <th>Nama</th>
+      <th>Bank</th>
+      <th>No Rekening</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+    <% for (let i = 0; i < payment.length; i++) {%>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= payment[i].type %></td>
+      <td>
+        <% payment[i].banks.forEach(banks => { %> <%= banks.name %> <%})%>
+      </td>
+      <td>
+        <% payment[i].banks.forEach(banks => { %> <%= banks.bankName %> <%})%>
+      </td>
+      <td>
+        <% payment[i].banks.forEach(banks => { %> <%= banks.noRekening %> <%})%>
+      </td>
+      <td>
+        <% if(payment[i].status === "Y") { %>
+        <span class="badge badge-success"> Aktif </span>
+        <%} else { %>
+        <span class="badge badge-danger"> Non-Aktif </span>
+        <%} %>
+      </td>
+
+      <td class="d-flex flex-column">
+        <form
+          action="/payment/status/<%= payment[i]._id %>?_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-primary btn-md">
+            <i class="fas fa-folder"></i>
+            <% if(payment[i].status === "Y") {%> Matikan <%} else { %> Hidupkan
+            <%}%>
+          </button>
+        </form>
+        <form
+          action="/payment/delete/<%= payment[i]._id %>?_method=DELETE"
+          method="POST"
+          class="d-flex flex-column p-1"
+        >
+          <a
+            href="/payment/edit/<%= payment[i]._id %>"
+            class="btn btn-warning mt-2 btn-md"
+          >
+            <i class="fas fa-pencil-alt"></i>
+            Ubah
+          </a>
+          <button class="btn btn-danger mt-2 btn-md">
+            <i class="fas fa-trash"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
