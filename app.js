@@ -19,6 +19,9 @@ var playerRouter = require("./app/player/router")
 var authRouter = require("./app/auth/router")
 var cors = require("cors")
 
+var app = express()
+const URL = `/api/v1`
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
@@ -54,9 +57,6 @@ app.use("/payment", paymentRouter)
 app.use("/transaction", transactionRouter)
 
 //REST API
-
-var app = express()
-const URL = `/api/v1`
 app.use(cors())
 app.use(`${URL}/players`, playerRouter)
 app.use(`${URL}/auth`, authRouter)
